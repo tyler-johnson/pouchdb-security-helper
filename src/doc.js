@@ -57,7 +57,6 @@ export default class Security {
 			url: "_security"
 		}).then((sec) => {
 			this.reset(sec);
-			return this;
 		});
 	}
 
@@ -66,6 +65,6 @@ export default class Security {
 			url: "_security",
 			method: "PUT",
 			body: this.toJSON()
-		}).then(() => this);
+		});
 	}
 }
