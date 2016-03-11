@@ -2,6 +2,10 @@
   "name": "pouchdb-security-helper",
   "description": "CouchDB _security document helpers for PouchDB.",
   "author": "Tyler Johnson <tyler@tylerjohnson.me>",
+  "repository": {
+    "url": "https://github.com/tyler-johnson/pouchdb-security-helper.git",
+    "type": "git"
+  },
   "main": "index.js",
   "scripts": {
     "lint": "jshint src/ test/",
