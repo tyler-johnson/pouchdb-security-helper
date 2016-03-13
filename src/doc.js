@@ -3,6 +3,11 @@ import SecurityLevel from "./level.js";
 
 export default class Security {
 	constructor(db, secobj) {
+		if (db instanceof Security) {
+			secobj = db.toJSON();
+			db = db.database;
+		}
+
 		this.database = db;
 		this.reset(secobj);
 	}
