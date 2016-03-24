@@ -57,19 +57,39 @@ export default class Security {
 	}
 
 	fetch() {
-		return this.database.request({
-			method: "GET",
-			url: "_security"
-		}).then((sec) => {
+		let p;
+
+		if (this.database.getSecurity) {
+			p = this.database.getSecurity();
+		} else if (this.database.request) {
+			p = this.database.request({
+				method: "GET",
+				url: "_security"
+			});
+		} else {
+			p = Promise.reject(new Error("Cannot fetch security on this database."));
+		}
+
+		return p.then((sec) => {
 			this.reset(sec);
 		});
 	}
 
 	save() {
-		return this.database.request({
-			url: "_security",
-			method: "PUT",
-			body: this.toJSON()
-		});
+		let p;
+
+		if (this.database.putSecurity) {
+			p = this.database.putSecurity(this.toJSON());
+		} else if (this.database.request) {
+			p = this.database.request({
+				url: "_security",
+				method: "PUT",
+				body: this.toJSON()
+			});
+		} else {
+			p = Promise.reject(new Error("Cannot save security on this database."));
+		}
+
+		return p;
 	}
 }
