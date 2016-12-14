@@ -1,30 +1,24 @@
 BIN = ./node_modules/.bin
 SRC = $(wildcard src/* src/*/*)
+TEST = $(wildcard test/* test/*/*)
 
 build: index.js
 
 index.js: src/index.js $(SRC)
 	$(BIN)/rollup $< -c -f cjs > $@
 
-test.js: test/index.js index.js $(TEST)
+test.js: test/index.js $(TEST)
 	$(BIN)/rollup $< -c -f cjs > $@
 
 test: test-node test-browser
-	make clean-self
 
-test-node: test.js install-self
+test-node: test.js
 	node $<
 
-test-browser: test.js install-self
+test-browser: test.js
 	$(BIN)/browserify $< --debug | $(BIN)/tape-run
 
-install-self: clean-self
-	ln -s ../ node_modules/pouchdb-security-helper
-
-clean-self:
-	rm -f node_modules/pouchdb-security-helper
-
 clean:
-	rm -f index.js test.js
+	rm -f index.js
 
-.PHONY: build clean test test-node test-browser install-self clean-self
+.PHONY: build
