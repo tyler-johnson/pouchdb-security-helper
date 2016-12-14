@@ -23,6 +23,7 @@
     "autorelease-travis": "^1.2.1",
     "babel-eslint": "^7.1.1",
     "babel-plugin-lodash": "^3.2.10",
+    "babel-plugin-transform-object-rest-spread": "^6.20.2",
     "babel-preset-es2015-rollup": "^3.0.0",
     "browserify": "^13.1.1",
     "eslint": "^3.12.2",
