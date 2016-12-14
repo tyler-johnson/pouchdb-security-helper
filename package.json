@@ -36,8 +36,12 @@
   "keywords": [
     "pouchdb",
     "security",
+    "_security",
     "document",
     "couchdb"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ]
 }
