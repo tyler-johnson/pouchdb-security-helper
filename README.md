@@ -119,7 +119,9 @@ Returns a boolean for whether or not the security document has any `names` or `r
 security.userHasAccess( userCtx ) → Boolean
 ```
 
-Determines if a user, as defined by the `userCtx`, has a name or role in the security document. The `userCtx` should be an object with `name` and `roles` fields, usually what `_session` would return. It can also be string, in which case it is interpretted as the `name` and used with `.nameHasAccess()`.
+Determines if a user, as defined by the `userCtx`, has a name or role in the security document. The `userCtx` should be an object with `name` and `roles` fields, usually what `_session` would return. This works similarly to CouchDB sessions and if the security has no members, this will always return `true`.
+
+`userCtx` can also be string, in which case it is interpretted as the `name` and used with `.nameHasAccess()`.
 
 #### security.nameHasAccess()
 
@@ -161,7 +163,7 @@ security.clone() → Security
 
 Returns a new Security instance that is an exact duplicate of this instance.
 
-### Security Level
+### Admins and Members
 
 The `SecurityLevel` class represents the object with `names` and `roles` arrays. In the `security` document, these are the `admins` and `members` objects.
 
@@ -234,9 +236,9 @@ level.clone() → SecurityLevel
 
 Returns an exact duplicate of this SecurityLevel instance.
 
-### SecurityType
+### Names and Roles
 
-A SecurityType is the lowest level class in a security document and represents an list of strings, typically for `names` or `roles`.
+A `SecurityType` is the lowest level class in a security document and represents an list of strings, typically for `names` or `roles`.
 
 #### type.size
 
