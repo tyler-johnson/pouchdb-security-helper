@@ -1,4 +1,3 @@
-import {defaults} from "lodash";
 import {Names, Roles} from "./type.js";
 
 export default class SecurityLevel {
@@ -19,11 +18,18 @@ export default class SecurityLevel {
 	}
 
 	add(data, opts) {
-		return this.set(data, defaults({ add: true, remove: false }, opts));
+		return this.set(data, {
+			add: true,
+			remove: false,
+			...opts
+		});
 	}
 
 	remove(data, opts) {
-		return this.set(data, defaults({ remove: true }, opts));
+		return this.set(data, {
+			remove: true,
+			...opts
+		});
 	}
 
 	set(data, opts) {

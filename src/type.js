@@ -1,4 +1,4 @@
-import {union,isString,without,clone} from "lodash";
+import {union,without} from "lodash";
 
 export default class SecurityType {
 	constructor(items) {
@@ -35,7 +35,7 @@ export default class SecurityType {
 	}
 
 	toJSON() {
-		return clone(this.items);
+		return this.items.slice(0);
 	}
 
 	forEach(fn, ctx) {
