@@ -1,4 +1,4 @@
-import {union,isString,without,isArray,some,contains,clone} from "lodash";
+import {union,without} from "lodash";
 
 export default class SecurityType {
 	constructor(items) {
@@ -12,14 +12,15 @@ export default class SecurityType {
 
 	add(items) {
 		if (items instanceof SecurityType) items = items.toJSON();
-		items = [].concat(items).filter(isString).filter(Boolean);
+		items = [].concat(items).filter((i) => i && typeof i === "string");
+
 		this.items = union(this.items, items);
 		return this;
 	}
 
 	remove(items) {
-		items = [].concat(items).filter(isString).filter(Boolean);
-		this.items = without.apply(void 0, [ this.items ].concat(items));
+		items = [].concat(items).filter((i) => i && typeof i === "string");
+		this.items = without(...[ this.items ].concat(items));
 		return this;
 	}
 
@@ -29,12 +30,12 @@ export default class SecurityType {
 	}
 
 	has(item) {
-		if (isArray(item)) return some(item, this.has, this);
-		return contains(this.items, item);
+		if (Array.isArray(item)) return item.some((i) => this.has(i));
+		return this.items.indexOf(item) >= 0;
 	}
 
 	toJSON() {
-		return clone(this.items);
+		return this.items.slice(0);
 	}
 
 	forEach(fn, ctx) {
@@ -70,7 +71,7 @@ export class Names extends SecurityType {
 	}
 
 	_parseUserName(user) {
-		if (isArray(user)) return user.map(this._parseUserName, this);
+		if (Array.isArray(user)) return user.map(this._parseUserName, this);
 		if (typeof user === "object" && user.name) user = user.name;
 		return user;
 	}

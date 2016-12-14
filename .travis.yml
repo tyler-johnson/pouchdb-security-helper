@@ -10,13 +10,15 @@ addons:
     packages:
       - xvfb
 node_js:
-  - '5'
+  - '7'
 before_install:
   - npm i -g npm@latest
 install:
   - export DISPLAY=':99.0'
   - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-  - npm upgrade && npm prune && npm rebuild
+  - npm install
+before_script:
+  - npm run lint
 script:
   - npm test
 after_success:

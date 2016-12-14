@@ -1,12 +1,10 @@
-import test from "tape";
 import PouchDB from "pouchdb";
-import securityPlugin from "pouchdb-security-helper";
+import memoryAdapter from "pouchdb-adapter-memory";
+import securityPlugin from "../src/index.js";
 
+PouchDB.plugin(memoryAdapter);
 PouchDB.plugin(securityPlugin);
 
-test("security() method returns an security object", (t) => {
-	t.plan(1);
-	let db = new PouchDB("tmpdb", { adapter: "memory" });
-	let security = db.security();
-	t.ok(security, "returns security object");
-});
+import "./doc.js";
+import "./level.js";
+import "./type.js";

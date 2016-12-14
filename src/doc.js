@@ -1,4 +1,3 @@
-import {isArray} from "lodash";
 import SecurityLevel from "./level.js";
 
 export default class Security {
@@ -23,7 +22,7 @@ export default class Security {
 	userHasAccess(user) {
 		if (typeof user === "string") return this.nameHasAccess(user);
 		return !this.hasMembers() || (user.name && this.nameHasAccess(user.name)) ||
-			(isArray(user.roles) && user.roles.some(this.roleHasAccess, this));
+			(Array.isArray(user.roles) && user.roles.some(this.roleHasAccess, this));
 	}
 
 	nameHasAccess(name) {
