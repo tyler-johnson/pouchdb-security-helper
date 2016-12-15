@@ -21,4 +21,4 @@ test-browser: test.js
 clean:
 	rm -f index.js
 
-.PHONY: build
+.PHONY: build clean test test-node test-browser
