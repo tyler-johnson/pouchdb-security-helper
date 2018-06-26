@@ -147,7 +147,7 @@ test("fetches security document from remote", (t) => {
 
 	// mock fetch
 	db.fetch = function(url) {
-		t.equals(url, "http://localhost:5984/tmpdb/_security", "correct url");
+		t.equals(url, "_security", "correct url");
 
 		return Promise.resolve({
 			ok: true,
@@ -182,7 +182,7 @@ test("saves security document to remote", (t) => {
 
 	// mock fetch
 	db.fetch = function(url, options) {
-		t.equals(url, "http://localhost:5984/tmpdb/_security", "correct url");
+		t.equals(url, "_security", "correct url");
 		t.equals(options.method, "PUT", "correct request method");
 		t.equals(options.headers.get("Content-Type"), "application/json", "correct content-type");
 		t.deepEquals(JSON.parse(options.body), rawsecurity, "correct body");

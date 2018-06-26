@@ -1,6 +1,5 @@
 import SecurityLevel from "./level.js";
 import { Headers } from "pouchdb-fetch";
-import urlJoin from "url-join";
 
 export default class Security {
 	constructor(db, secobj) {
@@ -57,10 +56,6 @@ export default class Security {
 		return new Security(this);
 	}
 
-	get url() {
-		return urlJoin(this.database.name, "_security");
-	}
-
 	fetch() {
 		let p;
 
@@ -69,7 +64,7 @@ export default class Security {
 		} else if (this.database.fetch) {
 			const headers = new Headers();
 			headers.set("Accept", "application/json");
-			p = this.database.fetch(this.url, {
+			p = this.database.fetch("_security", {
 				headers
 			}).then(resp => {
 				if (!resp.ok) {
@@ -96,7 +91,7 @@ export default class Security {
 			const headers = new Headers();
 			headers.set("Content-Type", "application/json");
 			headers.set("Accept", "application/json");
-			p = this.database.fetch(this.url, {
+			p = this.database.fetch("_security", {
 				method: "PUT",
 				body: JSON.stringify(this.toJSON()),
 				headers
