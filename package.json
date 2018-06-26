@@ -20,8 +20,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.10",
-    "pouchdb-fetch": "^7.0.0",
-    "url-join": "^4.0.0"
+    "pouchdb-fetch": "^7.0.0"
   },
   "devDependencies": {
     "autorelease": "^1.7.1",
