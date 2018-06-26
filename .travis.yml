@@ -10,7 +10,7 @@ addons:
     packages:
       - xvfb
 node_js:
-  - '7'
+  - '8'
 before_install:
   - npm i -g npm@latest
 install:
