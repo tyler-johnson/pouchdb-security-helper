@@ -1,4 +1,4 @@
-import PouchDB from "pouchdb";
+import PouchDB from "pouchdb-core";
 import memoryAdapter from "pouchdb-adapter-memory";
 import securityPlugin from "../src/index.js";
 

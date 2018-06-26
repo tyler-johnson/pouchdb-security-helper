@@ -1,5 +1,5 @@
 import test from "tape";
-import PouchDB from "pouchdb";
+import PouchDB from "pouchdb-core";
 import securityPlugin from "../src/index.js";
 
 const {Security} = securityPlugin;

@@ -1,5 +1,5 @@
 import test from "tape";
-import PouchDB from "pouchdb";
+import PouchDB from "pouchdb-core";
 import securityPlugin from "../src/index.js";
 
 const {Security} = securityPlugin;
@@ -126,4 +126,73 @@ test("reset() removes everything", (t) => {
 	security.reset();
 	t.notOk(security.hasMembers(), "security does not have members");
 	t.notOk(security.hasAdmins(), "security does not have admins");
+});
+
+test("fetches security document from remote", (t) => {
+	t.plan(2);
+
+	const rawsecurity =  {
+		members: {
+			names: ["memberName"],
+			roles: ["memberRole"]
+		},
+		admins: {
+			names: ["adminName"],
+			roles: ["adminRole"]
+		}
+	};
+
+	let db = new PouchDB("http://localhost:5984/tmpdb", { adapter: "memory" });
+	let security = db.security();
+
+	// mock fetch
+	db.fetch = function(url) {
+		t.equals(url, "http://localhost:5984/tmpdb/_security", "correct url");
+
+		return Promise.resolve({
+			ok: true,
+			json() {
+				return Promise.resolve(rawsecurity);
+			}
+		});
+	};
+
+	security.fetch().then(() => {
+		t.deepEquals(security.toJSON(), rawsecurity, "security matches fetch result");
+		t.end();
+	});
+});
+
+test("saves security document to remote", (t) => {
+	t.plan(4);
+
+	const rawsecurity =  {
+		members: {
+			names: ["memberName"],
+			roles: ["memberRole"]
+		},
+		admins: {
+			names: ["adminName"],
+			roles: ["adminRole"]
+		}
+	};
+
+	let db = new PouchDB("http://localhost:5984/tmpdb", { adapter: "memory" });
+	let security = db.security(rawsecurity);
+
+	// mock fetch
+	db.fetch = function(url, options) {
+		t.equals(url, "http://localhost:5984/tmpdb/_security", "correct url");
+		t.equals(options.method, "PUT", "correct request method");
+		t.equals(options.headers.get("Content-Type"), "application/json", "correct content-type");
+		t.deepEquals(JSON.parse(options.body), rawsecurity, "correct body");
+
+		return Promise.resolve({
+			ok: true
+		});
+	};
+
+	security.save().then(() => {
+		t.end();
+	});
 });

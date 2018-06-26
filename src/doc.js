@@ -1,4 +1,6 @@
 import SecurityLevel from "./level.js";
+import { Headers } from "pouchdb-fetch";
+import urlJoin from "url-join";
 
 export default class Security {
 	constructor(db, secobj) {
@@ -55,15 +57,26 @@ export default class Security {
 		return new Security(this);
 	}
 
+	get url() {
+		return urlJoin(this.database.name, "_security");
+	}
+
 	fetch() {
 		let p;
 
 		if (this.database.getSecurity) {
 			p = this.database.getSecurity();
-		} else if (this.database.request) {
-			p = this.database.request({
-				method: "GET",
-				url: "_security"
+		} else if (this.database.fetch) {
+			const headers = new Headers();
+			headers.set("Accept", "application/json");
+			p = this.database.fetch(this.url, {
+				headers
+			}).then(resp => {
+				if (!resp.ok) {
+					new Error("Failed to fetch security document.");
+				}
+
+				return resp.json();
 			});
 		} else {
 			p = Promise.reject(new Error("Cannot fetch security on this database."));
@@ -79,16 +92,23 @@ export default class Security {
 
 		if (this.database.putSecurity) {
 			p = this.database.putSecurity(this.toJSON());
-		} else if (this.database.request) {
-			p = this.database.request({
-				url: "_security",
+		} else if (this.database.fetch) {
+			const headers = new Headers();
+			headers.set("Content-Type", "application/json");
+			headers.set("Accept", "application/json");
+			p = this.database.fetch(this.url, {
 				method: "PUT",
-				body: this.toJSON()
+				body: JSON.stringify(this.toJSON()),
+				headers
+			}).then(resp => {
+				if (!resp.ok) {
+					new Error("Failed to save security document.");
+				}
 			});
 		} else {
 			p = Promise.reject(new Error("Cannot save security on this database."));
 		}
 
-		return p;
+		return p.then(() => {});
 	}
 }

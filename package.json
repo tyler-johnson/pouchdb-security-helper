@@ -9,30 +9,36 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint src/ test/",
-    "build": "make clean && make",
-    "test": "make test",
+    "clean": "shx rm -rf test.js index.js",
+    "build:test": "rollup test/index.js -c -f cjs > test.js",
+    "test:node": "node test.js",
+    "test:browser": "browserify test.js --debug | tape-run",
+    "test": "npm-run-all build:test test:node test:browser",
+    "build": "rollup src/index.js -c -f cjs > index.js",
     "prepare": "npm run build",
     "autorelease": "autorelease pre && npm publish && autorelease post"
   },
   "dependencies": {
-    "lodash": "^4.17.2"
+    "lodash": "^4.17.10",
+    "pouchdb-fetch": "^7.0.0",
+    "url-join": "^4.0.0"
   },
   "devDependencies": {
     "autorelease": "^1.7.1",
     "autorelease-github": "^1.2.0",
     "autorelease-travis": "^1.2.1",
-    "babel-eslint": "^7.1.1",
+    "babel-eslint": "^8.2.5",
     "babel-plugin-lodash": "^3.2.10",
     "babel-plugin-transform-object-rest-spread": "^6.20.2",
     "babel-preset-es2015-rollup": "^3.0.0",
-    "browserify": "^13.1.1",
-    "eslint": "^3.12.2",
-    "pouchdb": "^6.1.0",
-    "pouchdb-adapter-memory": "^6.1.0",
-    "rollup": "^0.37.0",
-    "rollup-plugin-babel": "^2.7.1",
+    "browserify": "^16.2.2",
+    "eslint": "^5.0.1",
+    "pouchdb-adapter-memory": "^7.0.0",
+    "pouchdb-core": "^7.0.0",
+    "rollup": "^0.61.2",
+    "rollup-plugin-babel": "^3.0.5",
     "tape": "^4.6.3",
-    "tape-run": "^2.1.4"
+    "tape-run": "^4.0.0"
   },
   "keywords": [
     "pouchdb",
