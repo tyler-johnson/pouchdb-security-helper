@@ -33,10 +33,12 @@
     "babel-preset-es2015-rollup": "^3.0.0",
     "browserify": "^16.2.2",
     "eslint": "^5.0.1",
+    "npm-run-all": "^4.1.3",
     "pouchdb-adapter-memory": "^7.0.0",
     "pouchdb-core": "^7.0.0",
     "rollup": "^0.61.2",
     "rollup-plugin-babel": "^3.0.5",
+    "shx": "^0.3.1",
     "tape": "^4.6.3",
     "tape-run": "^4.0.0"
   },
