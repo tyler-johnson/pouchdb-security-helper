@@ -7,8 +7,8 @@ assign(Security, { Level, Type, Names, Roles });
 
 let plugin = {
 	Security,
-	security: function() {
-		return new Security(this);
+	security: function(doc) {
+		return new Security(this, doc);
 	}
 };
 
