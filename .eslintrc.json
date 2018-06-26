@@ -2,8 +2,9 @@
   "parser": "babel-eslint",
   "extends": "eslint:recommended",
   "rules": {
-    "semi": 1,
-    "no-console": 0
+    "semi": "warn",
+    "no-console": "off",
+    "no-shadow": "warn"
   },
   "parserOptions": {
     "ecmaVersion": 6,
