@@ -7,6 +7,7 @@
     "type": "git"
   },
   "main": "index.js",
+  "typings": "index.d.ts",
   "scripts": {
     "lint": "eslint src/ test/",
     "clean": "shx rm -rf test.js index.js",
@@ -19,6 +20,7 @@
     "autorelease": "autorelease pre && npm publish && autorelease post"
   },
   "dependencies": {
+    "@types/pouchdb-core": "^6.4.1",
     "lodash": "^4.17.10",
     "pouchdb-fetch": "^7.0.0"
   },
@@ -50,6 +52,7 @@
   ],
   "license": "MIT",
   "files": [
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ]
 }
