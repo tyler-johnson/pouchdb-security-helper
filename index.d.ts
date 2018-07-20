@@ -65,6 +65,11 @@ interface UserDocument {
 }
 
 declare class Security {
+  static Level: typeof SecurityLevel;
+  static Type: typeof SecurityType;
+  static Names: typeof Names;
+  static Roles: typeof Roles;
+
   members: SecurityLevel;
   admins: SecurityLevel;
 
