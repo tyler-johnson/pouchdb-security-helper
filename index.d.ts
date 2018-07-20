@@ -81,3 +81,8 @@ declare class Security {
   fetch(): Promise<void>;
   save(): Promise<void>;
 }
+
+export = {
+  Security,
+  security(doc?: PartialSecurityDocument): Security
+};
