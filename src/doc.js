@@ -68,7 +68,7 @@ export default class Security {
 				headers
 			}).then(resp => {
 				if (!resp.ok) {
-					new Error("Failed to fetch security document.");
+					throw new Error("Failed to fetch security document.");
 				}
 
 				return resp.json();
@@ -97,7 +97,7 @@ export default class Security {
 				headers
 			}).then(resp => {
 				if (!resp.ok) {
-					new Error("Failed to save security document.");
+					throw new Error("Failed to save security document.");
 				}
 			});
 		} else {
