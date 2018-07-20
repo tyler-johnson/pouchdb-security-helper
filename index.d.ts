@@ -67,7 +67,7 @@ declare namespace PouchDB {
     }
 
     interface UserDocument {
-      name?: string;
+      name?: string | null;
       roles?: string[];
     }
 
